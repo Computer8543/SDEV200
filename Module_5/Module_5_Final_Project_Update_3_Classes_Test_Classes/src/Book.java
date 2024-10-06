@@ -93,11 +93,10 @@ public class Book {
                                         // we then set bookAvailable to true since it is in the system
                                         bookAvailable = true;
 
-                                        // then we set book borrowed time to null, since nobody has borrowed it yet
+                                        // then we set book borrowed time to now, since nobody has borrowed it yet
                                         // index 0 is the beginning time, index 1 is the ending time of the borrowing of the book
-                                        // todo: this might lead to the garbage collector collecting the array, so check here if that happens.
-                                        bookBorrowedTime[0] = null;
-                                        bookBorrowedTime[1] = null;
+                                        bookBorrowedTime[0] = LocalDate.now();
+                                        bookBorrowedTime[1] = LocalDate.now();
 
                                         // finally we increase the number of books in the library by 1
                                         numberOfBooksInTheLibrary++;
@@ -249,15 +248,38 @@ public class Book {
     }
 
     public void setBookBorrowed(boolean bookBorrowed) {
-        this.bookBorrowed = bookBorrowed;
+        if (bookBorrowed == true) {
+            bookAvailable = false;
+            this.bookBorrowed = bookBorrowed;
+        }
+        else {
+            this.bookBorrowed = bookBorrowed;
+        }
+
+        
     }
 
     public void setBookLost(boolean bookLost) {
-        this.bookLost = bookLost;
+        if (bookLost == true) {
+            bookAvailable = false;
+            this.bookLost = bookLost;
+        }
+        else {
+            this.bookLost = bookLost;
+        }
+        
     }
 
     public void setBookAvailable(boolean bookAvailable) {
-        this.bookAvailable = bookAvailable;
+        if (bookAvailable == true) {
+            bookLost = false;
+            bookBorrowed = false;
+            this.bookAvailable = bookAvailable;
+        }
+        else {
+            this.bookAvailable = bookAvailable;
+        }
+        
     }
 
     public void setBookBorrowedTime(LocalDate[] bookBorrowedTime) throws IllegalArgumentException {

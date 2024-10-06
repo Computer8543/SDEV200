@@ -4,7 +4,7 @@
  * Purpose: To track the borrower information for the library
  */
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -78,7 +78,7 @@ public class Borrower extends Person {
     private String state; // changed the data type for the methods I could use on it
     private int zipcode;
     private Map<String, Book> booksBorrowed = new TreeMap<>();
-    private Date dateOfBeginningLibraryMembership;
+    private LocalDate dateOfBeginningLibraryMembership;
     
     // methods
 
@@ -115,7 +115,7 @@ public class Borrower extends Person {
                 else if (emailAddress.length() > MAXCHARACTERLIMIT) {
                     throw new IllegalArgumentException("The email address cannot be more than 50 characters.");
                 }
-                else if ((!(emailAddress.matches("\\.\\*@\\{1\\}\\.\\*\\\\\\.\\\\\\.\\{3\\}")))) {
+                else if (!(emailAddress.matches("(.+)@(\\S+)$"))) {
                     throw new IllegalArgumentException("The email address has to be formatted correctly.");
                 }
                 else {
@@ -182,7 +182,7 @@ public class Borrower extends Person {
                                             booksBorrowed.forEach((k,v) -> this.booksBorrowed.put(k, v));
     
                                             // set up date of beginning library membership set to the current time
-                                            dateOfBeginningLibraryMembership = new Date();
+                                            dateOfBeginningLibraryMembership = LocalDate.now();
                                         }
     
                                     }
@@ -234,7 +234,7 @@ public class Borrower extends Person {
         return booksBorrowed;
     }
 
-    public Date getDateOfBeginningLibraryMembership() {
+    public LocalDate getDateOfBeginningLibraryMembership() {
         return dateOfBeginningLibraryMembership;
     }
 
@@ -268,7 +268,7 @@ public class Borrower extends Person {
         else if (emailAddress.length() > MAXCHARACTERLIMIT) {
             throw new IllegalArgumentException("The email address cannot be more than 50 characters.");
         }
-        else if ((!(emailAddress.matches("\\.\\*@\\{1\\}\\.\\*\\\\\\.\\\\\\.\\{3\\}")))) {
+        else if (!(emailAddress.matches("(.+)@(\\S+)$"))) {
             throw new IllegalArgumentException("The email address has to be formatted correctly.");
         }
         else {
